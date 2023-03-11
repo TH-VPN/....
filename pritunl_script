@@ -1,5 +1,6 @@
 #!/bin/bash
 
+clear
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\E[41;1;37m               ⇱ TH-VPN FREE SCRIPT ⇲             \E[0m"
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -26,6 +27,7 @@ echo "deb [ arch=amd64,arm64 ] $MONGODB_REPO focal/mongodb-org/4.4 multiverse" |
 apt update
 apt-get install mongodb-server -y
 
+clear
 sed -i "1i 127.0.0.1 th-vpn" /etc/hosts
 apt purge squid -y >/dev/null 2>&1
 cd /etc
