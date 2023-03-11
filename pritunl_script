@@ -1,0 +1,95 @@
+#!/bin/bash
+
+hostname -I | awk '{print $1}'>xip
+MIP=$(cat xip)
+IP=$MIP
+MYIP=$MIP
+SERVER_IP=$MIP
+KEYSERVER1='hkp://keyserver.ubuntu.com'
+KEYSERVER2='hkp://keyserver.ubuntu.com'
+PRITUNL_REPO='http://repo.pritunl.com/stable/apt'
+MONGODB_REPO='https://repo.mongodb.org/apt/ubuntu'
+
+apt update && apt upgrade -y && apt install curl gnupg2 wget unzip -y
+apt-key adv --keyserver $KEYSERVER1 --recv E162F504A20CDF15827F718D4B7C549A058F8B6B
+apt-key adv --keyserver $KEYSERVER2 --recv 7568D9BB55FF9E5287D586017AE645C0CF8E292A
+echo "deb $PRITUNL_REPO focal main" | tee /etc/apt/sources.list.d/pritunl.list
+apt update
+apt install pritunl -y
+systemctl stop pritunl
+systemctl start pritunl
+systemctl enable pritunl
+curl -fsSL https://www.mongodb.org/static/pgp/server-4.4.asc | apt-key add -
+echo "deb [ arch=amd64,arm64 ] $MONGODB_REPO focal/mongodb-org/4.4 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+apt update
+apt-get install mongodb-server -y
+echo ""
+echo "Open in your browser https://$SERVER_IP/"
+pritunl setup-key
+echo ""
+echo "Enter this code in the installation form"
+echo "Follow the instructions in the browser"
+
+sed -i "1i 127.0.0.1 th-vpn" /etc/hosts
+apt purge squid -y >/dev/null 2>&1
+cd /etc
+rm -rf squid
+cd
+echo
+touch /etc/apt/sources.list.d/trusty_sources.list
+echo "deb http://th.archive.ubuntu.com/ubuntu/ trusty main universe" | sudo tee --append /etc/apt/sources.list.d/trusty_sources.list > /dev/null
+apt update
+apt install -y squid3=3.3.8-1ubuntu6 squid=3.3.8-1ubuntu6 squid3-common=3.3.8-1ubuntu6
+rm -f squid3
+wget --no-check-certificate https://th-vpn.in.net/script_vpn/proxy/squid3 > /dev/null
+rm -f /etc/init.d/squid3
+cp squid3 /etc/init.d/
+chmod +x /etc/init.d/squid3
+update-rc.d squid3 defaults
+rm -f squid3
+rm -f xip
+hostname -I | awk '{print $1}'>xip
+MIP=$(cat xip)
+IP=$MIP
+MYIP=$MIP
+SERVER_IP=$MIP
+cat > /etc/squid3/squid.conf <<END
+http_port 8080
+http_port 3128
+acl url2 dstdomain -i th-vpn
+acl localhost src 127.0.0.1/32 ::1
+acl to_localhost dst 127.0.0.0/8 0.0.0.0/32 ::1
+acl localnet src 10.0.0.0/8
+acl localnet src 172.16.0.0/12
+acl localnet src 192.168.0.0/16
+acl SSL_ports port 443
+acl Safe_ports port 80
+acl Safe_ports port 21
+acl Safe_ports port 443
+acl Safe_ports port 70
+acl Safe_ports port 210
+acl Safe_ports port 1025-65535
+acl Safe_ports port 280
+acl Safe_ports port 488
+acl Safe_ports port 591
+acl Safe_ports port 777
+acl CONNECT method CONNECT
+acl SSH dst $SERVER_IP-$SERVER_IP/255.255.255.255
+acl SSH dst 127.0.0.1-127.0.0.1/255.255.255.255
+http_access allow SSH
+http_access allow localnet
+http_access allow localhost
+http_access allow url2
+http_access deny all
+visible_hostname th-vpn.in.net
+via off
+forwarded_for off
+pipeline_prefetch off
+refresh_pattern ^ftp:           1440    20%     10080
+refresh_pattern ^gopher:        1440    0%      1440
+refresh_pattern -i (/cgi-bin/|\?) 0     0%      0
+refresh_pattern .               0       20%     4320
+END
+service squid3 start
+service squid3 stop
+service squid3 restart
