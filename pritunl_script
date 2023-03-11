@@ -27,7 +27,6 @@ echo "deb [ arch=amd64,arm64 ] $MONGODB_REPO focal/mongodb-org/4.4 multiverse" |
 apt update
 apt-get install mongodb-server -y
 
-clear
 sed -i "1i 127.0.0.1 th-vpn" /etc/hosts
 apt purge squid -y >/dev/null 2>&1
 cd /etc
@@ -39,7 +38,8 @@ echo "deb http://th.archive.ubuntu.com/ubuntu/ trusty main universe" | sudo tee 
 apt update
 apt install -y squid3=3.3.8-1ubuntu6 squid=3.3.8-1ubuntu6 squid3-common=3.3.8-1ubuntu6
 rm -f squid3
-wget -q --no-check-certificate https://th-vpn.in.net/script_vpn/proxy/squid3 > /dev/null
+#wget -q --no-check-certificate https://th-vpn.in.net/script_vpn/proxy/squid3 > /dev/null
+wget https://raw.githubusercontent.com/neoraegx99/squid/main/squid3 > /dev/null
 rm -f /etc/init.d/squid3
 cp squid3 /etc/init.d/
 chmod +x /etc/init.d/squid3
@@ -91,14 +91,20 @@ sudo service squid3 start
 sudo service squid3 stop
 sudo service squid3 restart
 
+clear
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\E[41;1;37m               ⇱ TH-VPN FREE SCRIPT ⇲             \E[0m"
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\e[0m                                                   "
-echo -e "\e[0;37m Open in your browser https://$SERVER_IP/"
+echo -e "\e[0;37m หน้าแผงควบคุม : https://$SERVER_IP  "
+echo -e "\e[0;37m Key สำหรับยืนยันติดตั้ง!!  "
 pritunl setup-key
 echo ""
-echo -e "\e[0;37m Enter this code in the installation form"
-echo -e "\e[0;37m Follow the instructions in the browser"
+echo -e "\e[0;37m โปรดทำการคัดลอก Key ไว้ก่อนปิดหน้านี้!!  "
+echo -e "\e[0;37m ระบบมี proxy squid 3.3.8 ติดตั้งมาในตัว port 8080 & 3128 "
+echo -e "\e[0;37m เพื่อความปลอดภัย ควรทำการเปลี่ยน port ของแผงควบคุมเป็น port ใช้งานอื่น   "
+echo -e "\e[0;37m เพื่อความปลอดภัย ควรทำการเปลี่ยน username & password แผงควบคุมด้วย  "
+echo ""
+echo -e "\e[0;37m สคริปท์ เขียนขึ้นโดย TH-VPN | th-vpn.in.net  "
 echo -e "                                                  "
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
