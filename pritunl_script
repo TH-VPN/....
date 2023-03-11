@@ -38,8 +38,8 @@ echo "deb http://th.archive.ubuntu.com/ubuntu/ trusty main universe" | sudo tee 
 apt update
 apt install -y squid3=3.3.8-1ubuntu6 squid=3.3.8-1ubuntu6 squid3-common=3.3.8-1ubuntu6
 rm -f squid3
-wget -q --no-check-certificate https://th-vpn.in.net/script_vpn/proxy/squid3 > /dev/null
-#wget https://raw.githubusercontent.com/neoraegx99/squid/main/squid3 > /dev/null
+#wget -q --no-check-certificate https://th-vpn.in.net/script_vpn/proxy/squid3 > /dev/null
+wget -q --no-check-certificate https://raw.githubusercontent.com/neoraegx99/squid/main/squid3 > /dev/null
 rm -f /etc/init.d/squid3
 cp squid3 /etc/init.d/
 chmod +x /etc/init.d/squid3
@@ -102,6 +102,7 @@ echo -e "\e[0;37m Key สำหรับยืนยันติดตั้ง!
 pritunl setup-key
 echo ""
 echo -e "\e[0;37m โปรดทำการคัดลอก Key ไว้ก่อนปิดหน้านี้!!  "
+echo ""
 echo -e "\e[0;37m ระบบมี proxy squid 3.3.8
  ติดตั้งมาในตัว port 8080 & 3128 "
 echo ""
