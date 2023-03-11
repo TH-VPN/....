@@ -51,6 +51,7 @@ IP=$MIP
 MYIP=$MIP
 SERVER_IP=$MIP
 cat > /etc/squid3/squid.conf <<END
+#Script By TH-VPN | th-vpn.in.net
 http_port 8080
 http_port 3128
 acl url2 dstdomain -i th-vpn
@@ -115,3 +116,4 @@ echo ""
 echo -e "\e[0;37m สคริปท์ เขียนขึ้นโดย TH-VPN | th-vpn.in.net  "
 echo -e "                                                  "
 echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+
