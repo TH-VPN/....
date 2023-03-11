@@ -87,6 +87,7 @@ refresh_pattern ^gopher:        1440    0%      1440
 refresh_pattern -i (/cgi-bin/|\?) 0     0%      0
 refresh_pattern .               0       20%     4320
 END
+sudo systemctl enable squid3
 sudo service squid3 start
 sudo service squid3 stop
 sudo service squid3 restart
@@ -101,9 +102,12 @@ echo -e "\e[0;37m Key สำหรับยืนยันติดตั้ง!
 pritunl setup-key
 echo ""
 echo -e "\e[0;37m โปรดทำการคัดลอก Key ไว้ก่อนปิดหน้านี้!!  "
-echo -e "\e[0;37m ระบบมี proxy squid 3.3.8 ติดตั้งมาในตัว port 8080 & 3128 "
-echo -e "\e[0;37m เพื่อความปลอดภัย ควรทำการเปลี่ยน port ของแผงควบคุมเป็น port ใช้งานอื่น   "
-echo -e "\e[0;37m เพื่อความปลอดภัย ควรทำการเปลี่ยน username & password แผงควบคุมด้วย  "
+echo -e "\e[0;37m ระบบมี proxy squid 3.3.8
+ ติดตั้งมาในตัว port 8080 & 3128 "
+echo -e "\e[0;37m เพื่อความปลอดภัย ควรทำการเปลี่ยน port
+ ของแผงควบคุมเป็น port ใช้งานอื่น   "
+echo -e "\e[0;37m เพื่อความปลอดภัย ควรทำการเปลี่ยน
+ username & password แผงควบคุมด้วย  "
 echo ""
 echo -e "\e[0;37m สคริปท์ เขียนขึ้นโดย TH-VPN | th-vpn.in.net  "
 echo -e "                                                  "
