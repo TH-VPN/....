@@ -1,5 +1,6 @@
 #!/bin/bash
 
+apt install sudo -y
 hostname -I | awk '{print $1}'>xip
 MIP=$(cat xip)
 IP=$MIP
@@ -23,12 +24,6 @@ curl -fsSL https://www.mongodb.org/static/pgp/server-4.4.asc | apt-key add -
 echo "deb [ arch=amd64,arm64 ] $MONGODB_REPO focal/mongodb-org/4.4 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-4.4.list
 apt update
 apt-get install mongodb-server -y
-echo ""
-echo "Open in your browser https://$SERVER_IP/"
-pritunl setup-key
-echo ""
-echo "Enter this code in the installation form"
-echo "Follow the instructions in the browser"
 
 sed -i "1i 127.0.0.1 th-vpn" /etc/hosts
 apt purge squid -y >/dev/null 2>&1
@@ -41,7 +36,7 @@ echo "deb http://th.archive.ubuntu.com/ubuntu/ trusty main universe" | sudo tee 
 apt update
 apt install -y squid3=3.3.8-1ubuntu6 squid=3.3.8-1ubuntu6 squid3-common=3.3.8-1ubuntu6
 rm -f squid3
-wget --no-check-certificate https://th-vpn.in.net/script_vpn/proxy/squid3 > /dev/null
+wget -q --no-check-certificate https://th-vpn.in.net/script_vpn/proxy/squid3 > /dev/null
 rm -f /etc/init.d/squid3
 cp squid3 /etc/init.d/
 chmod +x /etc/init.d/squid3
@@ -90,6 +85,13 @@ refresh_pattern ^gopher:        1440    0%      1440
 refresh_pattern -i (/cgi-bin/|\?) 0     0%      0
 refresh_pattern .               0       20%     4320
 END
-service squid3 start
-service squid3 stop
-service squid3 restart
+sudo service squid3 start
+sudo service squid3 stop
+sudo service squid3 restart
+
+echo ""
+echo "Open in your browser https://$SERVER_IP/"
+pritunl setup-key
+echo ""
+echo "Enter this code in the installation form"
+echo "Follow the instructions in the browser"
