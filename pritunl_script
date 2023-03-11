@@ -52,6 +52,7 @@ MYIP=$MIP
 SERVER_IP=$MIP
 cat > /etc/squid3/squid.conf <<END
 #Script By TH-VPN | th-vpn.in.net
+
 http_port 8080
 http_port 3128
 acl url2 dstdomain -i th-vpn
