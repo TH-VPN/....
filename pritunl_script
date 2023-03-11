@@ -1,6 +1,5 @@
 #!/bin/bash
 
-apt install sudo -y
 hostname -I | awk '{print $1}'>xip
 MIP=$(cat xip)
 IP=$MIP
@@ -11,7 +10,7 @@ KEYSERVER2='hkp://keyserver.ubuntu.com'
 PRITUNL_REPO='http://repo.pritunl.com/stable/apt'
 MONGODB_REPO='https://repo.mongodb.org/apt/ubuntu'
 
-apt update && apt upgrade -y && apt install curl gnupg2 wget unzip -y
+apt update && apt upgrade -y && apt install curl gnupg2 wget unzip -y && apt install sudo -y
 apt-key adv --keyserver $KEYSERVER1 --recv E162F504A20CDF15827F718D4B7C549A058F8B6B
 apt-key adv --keyserver $KEYSERVER2 --recv 7568D9BB55FF9E5287D586017AE645C0CF8E292A
 echo "deb $PRITUNL_REPO focal main" | tee /etc/apt/sources.list.d/pritunl.list
