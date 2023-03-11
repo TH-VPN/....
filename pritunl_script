@@ -1,7 +1,9 @@
 #!/bin/bash
 
-hostname -I | awk '{print $1}'>xip
-MIP=$(cat xip)
+echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\E[41;1;37m               ⇱ TH-VPN FREE SCRIPT ⇲             \E[0m"
+echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+MIP=$(wget -qO- ipv4.icanhazip.com)
 IP=$MIP
 MYIP=$MIP
 SERVER_IP=$MIP
@@ -42,8 +44,7 @@ chmod +x /etc/init.d/squid3
 update-rc.d squid3 defaults
 rm -f squid3
 rm -f xip
-hostname -I | awk '{print $1}'>xip
-MIP=$(cat xip)
+MIP=$(wget -qO- ipv4.icanhazip.com)
 IP=$MIP
 MYIP=$MIP
 SERVER_IP=$MIP
@@ -88,9 +89,14 @@ sudo service squid3 start
 sudo service squid3 stop
 sudo service squid3 restart
 
-echo ""
-echo "Open in your browser https://$SERVER_IP/"
+echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\E[41;1;37m               ⇱ TH-VPN FREE SCRIPT ⇲             \E[0m"
+echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\e[0m                                                   "
+echo -e "\e[0;37m Open in your browser https://$SERVER_IP/"
 pritunl setup-key
 echo ""
-echo "Enter this code in the installation form"
-echo "Follow the instructions in the browser"
+echo -e "\e[0;37m Enter this code in the installation form"
+echo -e "\e[0;37m Follow the instructions in the browser"
+echo -e "                                                  "
+echo -e "\033[0;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
